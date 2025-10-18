@@ -1,0 +1,75 @@
+<%- include('partials/header') %>
+
+<section class="page-header">
+    <div class="container">
+        <h1>My Projects</h1>
+        <p>Explore my work and contributions</p>
+    </div>
+</section>
+
+<section class="projects-section">
+    <div class="container">
+        <div class="projects-grid">
+            <% data.projects.forEach(project => { %>
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3><%= project.name %></h3>
+                    <p><%= project.description %></p>
+                    <div class="project-tech">
+                        <% project.tech.forEach(tech => { %>
+                            <span class="tech-tag"><%= tech %></span>
+                        <% }); %>
+                    </div>
+                    <a href="<%= project.url %>" target="_blank" class="project-link">
+                        View Project <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            <% }); %>
+
+            <!-- Additional Project Cards -->
+            <div class="project-card">
+                <div class="project-icon">
+                    <i class="fab fa-github"></i>
+                </div>
+                <h3>Open Source Contributions</h3>
+                <p>Various contributions to open-source projects on GitHub</p>
+                <div class="project-tech">
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">NodeJS</span>
+                    <span class="tech-tag">Git</span>
+                </div>
+                <a href="<%= data.github %>" target="_blank" class="project-link">
+                    View on GitHub <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="project-card featured">
+                <div class="project-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <h3>Portfolio Website</h3>
+                <p>This responsive portfolio website built with ExpressJS and modern ES6+ JavaScript</p>
+                <div class="project-tech">
+                    <span class="tech-tag">ExpressJS</span>
+                    <span class="tech-tag">EJS</span>
+                    <span class="tech-tag">CSS3</span>
+                </div>
+                <a href="/" class="project-link">
+                    You're Here! <i class="fas fa-check"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="github-cta">
+            <h2>Want to see more?</h2>
+            <p>Check out all my projects and contributions on GitHub</p>
+            <a href="<%= data.github %>" target="_blank" class="btn btn-primary">
+                <i class="fab fa-github"></i> Visit My GitHub
+            </a>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

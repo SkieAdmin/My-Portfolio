@@ -1,0 +1,108 @@
+<%- include('partials/header') %>
+
+<section class="page-header">
+    <div class="container">
+        <h1>About Me</h1>
+        <p>Get to know more about my journey and expertise</p>
+    </div>
+</section>
+
+<section class="about-section">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-content">
+                <div class="about-profile">
+                    <img src="<%= data.avatar %>" alt="<%= data.fullName %>" class="about-avatar">
+                </div>
+                <h2>Hello! I'm <span class="text-accent"><%= data.fullName %></span></h2>
+                <p class="about-text"><%= data.about %></p>
+
+                <div class="about-info">
+                    <div class="info-item">
+                        <i class="fas fa-user"></i>
+                        <div>
+                            <h4>Full Name</h4>
+                            <p><%= data.fullName %></p>
+                            <p class="text-accent">Known as "<%= data.nickname %>"</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-birthday-cake"></i>
+                        <div>
+                            <h4>Age</h4>
+                            <p><%= data.age %> years old (<%= data.birthdate %>)</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <div>
+                            <h4>Education</h4>
+                            <p><%= data.college %></p>
+                            <p class="text-accent"><%= data.status %></p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-briefcase"></i>
+                        <div>
+                            <h4>Role</h4>
+                            <p><%= data.title %></p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-globe"></i>
+                        <div>
+                            <h4>Website</h4>
+                            <p><a href="<%= data.website %>" target="_blank"><%= data.website %></a></p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fab fa-github"></i>
+                        <div>
+                            <h4>GitHub</h4>
+                            <p><a href="<%= data.github %>" target="_blank">@SkieAdmin</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-skills">
+                <h3>What I Do</h3>
+                <div class="skill-category">
+                    <h4><i class="fas fa-code"></i> Programming Languages</h4>
+                    <ul>
+                        <% data.skills.languages.forEach(lang => { %>
+                            <li><%= lang %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h4><i class="fas fa-database"></i> Databases</h4>
+                    <ul>
+                        <% data.skills.databases.forEach(db => { %>
+                            <li><%= db %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="experience-section">
+            <h2>Experience</h2>
+            <div class="timeline">
+                <% data.experience.forEach(exp => { %>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3><%= exp.title %></h3>
+                            <h4><%= exp.company %></h4>
+                            <p class="period"><i class="far fa-calendar"></i> <%= exp.period %></p>
+                            <p><%= exp.description %></p>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

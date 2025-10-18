@@ -1,0 +1,144 @@
+<%- include('partials/header') %>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    Hello! I'm <span class="text-accent"><%= data.fullName %></span>
+                    <br><span class="hero-nickname">(Known as <%= data.nickname %>)</span>
+                </h1>
+                <h2 class="hero-subtitle"><%= data.title %></h2>
+                <p class="hero-company">at <a href="<%= data.website %>" target="_blank"><%= data.companyHandle %></a></p>
+                <p class="hero-description">
+                    <%= data.description %>
+                </p>
+                <div class="hero-buttons">
+                    <a href="/projects" class="btn btn-primary">View My Work</a>
+                    <a href="/contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+                <div class="hero-social">
+                    <a href="<%= data.github %>" target="_blank" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="<%= data.website %>" target="_blank" aria-label="Website">
+                        <i class="fas fa-globe"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="profile-container">
+                    <div class="profile-image-wrapper">
+                        <img src="<%= data.avatar %>" alt="<%= data.fullName %>" class="profile-image">
+                        <div class="profile-ring"></div>
+                        <div class="profile-ring-2"></div>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-code"></i>
+                            <span>7+ Years</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-project-diagram"></i>
+                            <span>Multiple Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-laptop-code"></i>
+                            <span>Full-Stack Dev</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-scroll">
+        <a href="#about-preview">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </div>
+</section>
+
+<!-- About Preview Section -->
+<section id="about-preview" class="about-preview">
+    <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-preview-content">
+            <div class="about-stats">
+                <div class="stat-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Full-Stack Developer</h3>
+                    <p>Specializing in JavaScript ecosystem</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3><%= data.status %></h3>
+                    <p><%= data.college %></p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-birthday-cake"></i>
+                    <h3><%= data.age %> Years Old</h3>
+                    <p>Born <%= data.birthdate %></p>
+                </div>
+            </div>
+            <div class="about-cta">
+                <a href="/about" class="btn btn-primary">Learn More About Me</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Preview Section -->
+<section class="skills-preview">
+    <div class="container">
+        <h2 class="section-title">Technologies I Work With</h2>
+        <div class="tech-grid">
+            <div class="tech-card">
+                <i class="fas fa-hashtag"></i>
+                <h3>C# / .NET</h3>
+            </div>
+            <div class="tech-card">
+                <i class="fas fa-code"></i>
+                <h3>C++</h3>
+            </div>
+            <div class="tech-card">
+                <i class="fab fa-node-js"></i>
+                <h3>NodeJS</h3>
+            </div>
+            <div class="tech-card">
+                <i class="fab fa-js"></i>
+                <h3>JavaScript</h3>
+            </div>
+            <div class="tech-card">
+                <i class="fab fa-react"></i>
+                <h3>ReactJS</h3>
+            </div>
+            <div class="tech-card">
+                <i class="fas fa-database"></i>
+                <h3>MySQL</h3>
+            </div>
+            <div class="tech-card">
+                <i class="fas fa-leaf"></i>
+                <h3>MongoDB</h3>
+            </div>
+            <div class="tech-card">
+                <i class="fab fa-git-alt"></i>
+                <h3>Git</h3>
+            </div>
+        </div>
+        <div class="skills-cta">
+            <a href="/skills" class="btn btn-secondary">View All Skills</a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Let's Work Together</h2>
+        <p>I'm currently available for freelance work and collaborations</p>
+        <a href="/contact" class="btn btn-primary">Contact Me</a>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

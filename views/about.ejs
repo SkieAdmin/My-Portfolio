@@ -1,7 +1,8 @@
 <%- include('partials/header') %>
 
-<section class="page-header">
-    <div class="container">
+<section class="page-header about-page-header">
+    <canvas id="particleCanvas" class="particle-canvas"></canvas>
+    <div class="container" style="position:relative;z-index:1;">
         <h1>About Me</h1>
         <p>Get to know more about my journey and expertise</p>
     </div>
@@ -37,6 +38,7 @@
                         <i class="fas fa-graduation-cap"></i>
                         <div>
                             <h4>Education</h4>
+                            <p><%= data.degree %></p>
                             <p><%= data.college %></p>
                             <p class="text-accent"><%= data.status %></p>
                         </div>
@@ -49,17 +51,17 @@
                         </div>
                     </div>
                     <div class="info-item">
-                        <i class="fas fa-globe"></i>
+                        <i class="fas fa-robot"></i>
                         <div>
-                            <h4>Website</h4>
-                            <p><a href="<%= data.website %>" target="_blank"><%= data.website %></a></p>
+                            <h4>AI Tools</h4>
+                            <p>Claude Code, DeepSeek, MCP Orchestration</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <i class="fab fa-github"></i>
                         <div>
                             <h4>GitHub</h4>
-                            <p><a href="<%= data.github %>" target="_blank">@SkieAdmin</a></p>
+                            <p><a href="<%= data.github %>" target="_blank">@<%= data.githubUsername %></a></p>
                         </div>
                     </div>
                 </div>
@@ -68,7 +70,7 @@
             <div class="about-skills">
                 <h3>What I Do</h3>
                 <div class="skill-category">
-                    <h4><i class="fas fa-code"></i> Programming Languages</h4>
+                    <h4><i class="fas fa-code"></i> Languages & Frameworks</h4>
                     <ul>
                         <% data.skills.languages.forEach(lang => { %>
                             <li><%= lang %></li>
@@ -80,6 +82,30 @@
                     <ul>
                         <% data.skills.databases.forEach(db => { %>
                             <li><%= db %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h4><i class="fas fa-server"></i> Infrastructure & Security</h4>
+                    <ul>
+                        <% data.skills.infrastructure.forEach(item => { %>
+                            <li><%= item %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h4><i class="fas fa-robot"></i> AI Tooling & Automation</h4>
+                    <ul>
+                        <% data.skills.aiTools.forEach(item => { %>
+                            <li><%= item %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h4><i class="fas fa-microchip"></i> Hardware & Embedded</h4>
+                    <ul>
+                        <% data.skills.hardware.forEach(item => { %>
+                            <li><%= item %></li>
                         <% }); %>
                     </ul>
                 </div>
@@ -102,7 +128,92 @@
                 <% }); %>
             </div>
         </div>
+
+        <div class="certificates-section">
+            <h2>Certificates & Awards</h2>
+            <div class="certificates-grid">
+                <% data.certificates.forEach((cert, index) => { %>
+                    <div class="certificate-card" onclick="openCertModal(<%= index %>)">
+                        <div class="certificate-image-wrapper">
+                            <img src="<%= cert.image %>" alt="<%= cert.title %>" class="certificate-thumbnail" loading="lazy">
+                            <div class="certificate-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="certificate-card-body">
+                            <div class="certificate-card-header">
+                                <div class="certificate-icon">
+                                    <i class="<%= cert.icon %>"></i>
+                                </div>
+                                <div>
+                                    <h3><%= cert.title %></h3>
+                                    <span class="certificate-category"><%= cert.category %></span>
+                                </div>
+                            </div>
+                            <div class="certificate-meta">
+                                <p><i class="fas fa-building"></i> <%= cert.issuer %></p>
+                                <p><i class="far fa-calendar"></i> <%= cert.date %></p>
+                                <p><i class="fas fa-info-circle"></i> <%= cert.details %></p>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
     </div>
 </section>
+
+<!-- Certificate Modal / Lightbox -->
+<div class="cert-modal" id="certModal">
+    <div class="cert-modal-overlay" onclick="closeCertModal()"></div>
+    <div class="cert-modal-content">
+        <button class="cert-modal-close" onclick="closeCertModal()">&times;</button>
+        <button class="cert-modal-nav cert-modal-prev" onclick="navigateCert(-1)"><i class="fas fa-chevron-left"></i></button>
+        <img src="" alt="" id="certModalImage" class="cert-modal-image">
+        <button class="cert-modal-nav cert-modal-next" onclick="navigateCert(1)"><i class="fas fa-chevron-right"></i></button>
+        <div class="cert-modal-info">
+            <h3 id="certModalTitle"></h3>
+            <p id="certModalDetails"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const certificates = <%- JSON.stringify(data.certificates) %>;
+    let currentCertIndex = 0;
+
+    function openCertModal(index) {
+        currentCertIndex = index;
+        updateModal();
+        document.getElementById('certModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCertModal() {
+        document.getElementById('certModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function navigateCert(direction) {
+        currentCertIndex = (currentCertIndex + direction + certificates.length) % certificates.length;
+        updateModal();
+    }
+
+    function updateModal() {
+        const cert = certificates[currentCertIndex];
+        document.getElementById('certModalImage').src = cert.image;
+        document.getElementById('certModalImage').alt = cert.title;
+        document.getElementById('certModalTitle').textContent = cert.title;
+        document.getElementById('certModalDetails').textContent = cert.issuer + ' | ' + cert.date;
+    }
+
+    document.addEventListener('keydown', (e) => {
+        const modal = document.getElementById('certModal');
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'Escape') closeCertModal();
+        if (e.key === 'ArrowLeft') navigateCert(-1);
+        if (e.key === 'ArrowRight') navigateCert(1);
+    });
+</script>
 
 <%- include('partials/footer') %>

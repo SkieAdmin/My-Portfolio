@@ -3,41 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Skie - Web Developer & Software Engineer Portfolio">
-    <meta name="keywords" content="Web Developer, Software Engineer, NodeJS, ExpressJS, ReactJS, JavaScript">
-    <meta name="author" content="Skie">
-    <title><%= title %> | Skie Portfolio</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="description" content="Kerneil 'Skie' Gocotano — Software Developer & Systems Integrator. Secure backend infrastructure, modern web apps, and AI-integrated systems.">
+    <meta name="keywords" content="Software Developer, Systems Integrator, Backend Engineer, NodeJS, .NET, C#, Python, Linux, AI, MCP">
+    <meta name="author" content="Kerneil 'Skie' Gocotano">
+    <meta name="theme-color" content="#06090f">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2306090f'/%3E%3Ctext x='5' y='23' font-family='monospace' font-size='17' fill='%234ef0a3'%3E%3E_%3C/text%3E%3C/svg%3E">
+    <title><%= title %> | skie@dev</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <a href="/">Skie<span class="text-accent">.</span></a>
-            </div>
-            <button class="nav-toggle" id="navToggle">
-                <span></span>
-                <span></span>
-                <span></span>
+    <!-- Scroll progress meter -->
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+    <!-- Custom reticle cursor -->
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+    <!-- Ambient background layers -->
+    <div class="bg-grid" aria-hidden="true"></div>
+    <canvas id="netCanvas" class="net-canvas" aria-hidden="true"></canvas>
+    <div class="bg-glow" aria-hidden="true"></div>
+    <div class="bg-scanlines" aria-hidden="true"></div>
+
+    <!-- Top navigation / system bar -->
+    <nav class="nav" id="nav">
+        <div class="container nav-inner">
+            <a href="/" class="brand" aria-label="Home">
+                <span class="brand-prompt">skie@dev</span><span class="brand-sep">:</span><span class="brand-path">~</span><span class="brand-caret">$</span>
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
             </button>
+
             <ul class="nav-menu" id="navMenu">
-                <li><a href="/" class="<%= title === 'Home' ? 'active' : '' %>">Home</a></li>
-                <li><a href="/about" class="<%= title === 'About Me' ? 'active' : '' %>">About</a></li>
-                <li><a href="/projects" class="<%= title === 'My Projects' ? 'active' : '' %>">Projects</a></li>
-                <li><a href="/skills" class="<%= title === 'Skills & Technologies' ? 'active' : '' %>">Skills</a></li>
-                <li><a href="/contact" class="<%= title === 'Contact Me' ? 'active' : '' %>">Contact</a></li>
-                <li>
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                        <i class="fas fa-sun"></i>
-                    </button>
-                </li>
+                <li><a href="/" class="nav-link <%= title === 'Home' ? 'active' : '' %>"><span class="nav-slash">/</span>home</a></li>
+                <li><a href="/about" class="nav-link <%= title === 'About Me' ? 'active' : '' %>"><span class="nav-slash">/</span>about</a></li>
+                <li><a href="/projects" class="nav-link <%= title === 'My Projects' ? 'active' : '' %>"><span class="nav-slash">/</span>projects</a></li>
+                <li><a href="/skills" class="nav-link <%= title === 'Skills & Technologies' ? 'active' : '' %>"><span class="nav-slash">/</span>skills</a></li>
+                <li><a href="/contact" class="nav-link <%= title === 'Contact Me' ? 'active' : '' %>"><span class="nav-slash">/</span>contact</a></li>
             </ul>
+
+            <div class="nav-status">
+                <span class="status-chip" title="Available for work">
+                    <span class="status-dot"></span>ONLINE
+                </span>
+                <span class="status-clock" id="statusClock" aria-hidden="true">--:--:--</span>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
-    <main>
+    <main class="main">

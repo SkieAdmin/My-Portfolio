@@ -1,150 +1,131 @@
 <%- include('partials/header') %>
 
-<!-- Hero Section -->
+<!-- ============ HERO : boot sequence ============ -->
 <section class="hero">
-    <canvas id="particleCanvas" class="particle-canvas"></canvas>
-    <div class="container">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">
-                    Hello! I'm <span class="text-accent"><%= data.fullName %></span>
-                    <br><span class="hero-nickname">(Known as <%= data.nickname %>)</span>
-                </h1>
-                <h2 class="hero-subtitle"><%= data.title %></h2>
-                <p class="hero-company">at <a href="<%= data.website %>" target="_blank"><%= data.companyHandle %></a></p>
-                <p class="hero-description">
-                    <%= data.description %>
-                </p>
-                <div class="hero-buttons">
-                    <a href="/projects" class="btn btn-primary">View My Work</a>
-                    <a href="/about" class="btn btn-secondary">About Me</a>
-                </div>
-                <div class="hero-social">
-                    <a href="<%= data.github %>" target="_blank" aria-label="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://www.facebook.com/SkieAdmin" target="_blank" aria-label="Facebook">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                    <a href="https://www.youtube.com/@SkieHacker" target="_blank" aria-label="YouTube">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                    <a href="<%= data.website %>" target="_blank" aria-label="Website">
-                        <i class="fas fa-globe"></i>
-                    </a>
-                </div>
+    <div class="container hero-grid">
+        <div class="terminal booting" id="bootTerminal">
+            <div class="terminal-bar">
+                <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+                <span class="terminal-title">skie@portfolio: ~</span>
+                <span class="terminal-tag">bash</span>
             </div>
-            <div class="hero-image">
-                <div class="profile-container">
-                    <div class="profile-image-wrapper">
-                        <img src="<%= data.avatar %>" alt="<%= data.fullName %>" class="profile-image">
-                        <div class="profile-ring"></div>
-                        <div class="profile-ring-2"></div>
-                    </div>
-                    <div class="profile-stats">
-                        <div class="stat-item">
-                            <i class="fas fa-code"></i>
-                            <span>7+ Years</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-project-diagram"></i>
-                            <span>Multiple Projects</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-laptop-code"></i>
-                            <span>Full-Stack Dev</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="terminal-body">
+                <p class="line"><span class="prompt">skie@portfolio<span class="p-path">:~$</span></span> <span class="cmd">whoami</span></p>
+                <p class="out name"><%= data.fullName %></p>
+
+                <p class="line"><span class="prompt">$</span> <span class="cmd">cat role.txt</span></p>
+                <p class="out role"><%= data.title %></p>
+                <p class="out muted">@ <a href="<%= data.website %>" target="_blank" rel="noopener" class="text-accent"><%= data.company %></a></p>
+
+                <p class="line"><span class="prompt">$</span> <span class="cmd">./list_stack --top</span></p>
+                <p class="out stack"><b>.NET</b> · <b>Node.js</b> · <b>Python</b> · <b>React</b> · <b>Linux</b> · <b>MCP</b></p>
+
+                <p class="line"><span class="prompt">$</span> <span class="cmd">cat status.txt</span></p>
+                <p class="out">7+ years building secure backends &amp; AI-integrated systems.</p>
+                <p class="out muted">// available for work · remote-friendly · Philippines</p>
+
+                <p class="line"><span class="prompt">$</span> <span class="caret"></span></p>
             </div>
         </div>
+
+        <aside class="hero-side">
+            <div class="avatar-frame">
+                <img src="<%= data.avatar %>" alt="<%= data.fullName %>" class="avatar-img">
+                <span class="avatar-scan"></span>
+                <span class="avatar-tag">● live</span>
+            </div>
+            <div class="hero-cta">
+                <a href="/projects" class="btn btn-primary magnetic">./view_work</a>
+                <a href="/about" class="btn btn-ghost magnetic">./about.md</a>
+            </div>
+            <div class="hero-social">
+                <a href="<%= data.github %>" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.facebook.com/SkieAdmin" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.youtube.com/@SkieHacker" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="<%= data.website %>" target="_blank" rel="noopener" aria-label="Website"><i class="fas fa-globe"></i></a>
+            </div>
+        </aside>
     </div>
-    <div class="hero-scroll">
-        <a href="#about-preview">
-            <i class="fas fa-chevron-down"></i>
-        </a>
-    </div>
+    <a href="#profile" class="scroll-cue">scroll <i class="fas fa-chevron-down"></i></a>
 </section>
 
-<!-- About Preview Section -->
-<section id="about-preview" class="about-preview">
+<noscript><style>.terminal.booting .line,.terminal.booting .out{opacity:1!important}.terminal,.hero-side{opacity:1!important;transform:none!important}</style></noscript>
+
+<!-- ============ SYSTEM PROFILE ============ -->
+<section class="about-preview" id="profile">
     <div class="container">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-preview-content">
-            <div class="about-stats">
-                <div class="stat-card">
-                    <i class="fas fa-code"></i>
-                    <h3>Full-Stack Developer</h3>
-                    <p>Specializing in JavaScript ecosystem</p>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-graduation-cap"></i>
-                    <h3><%= data.status %></h3>
-                    <p><%= data.college %></p>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-birthday-cake"></i>
-                    <h3><%= data.age %> Years Old</h3>
-                    <p>Born <%= data.birthdate %></p>
-                </div>
+        <div class="section-head">
+            <p class="eyebrow"><span class="text-accent">//</span> 01 — profile</p>
+            <h2 class="section-title">System Profile</h2>
+            <p class="section-sub">A backend-focused engineer who ships secure infrastructure, modern web apps, and AI-integrated systems.</p>
+        </div>
+        <div class="about-stats">
+            <div class="stat-card" data-tag="[exp]">
+                <i class="fas fa-terminal ico"></i>
+                <h3><span data-count="7">0</span>+ Years</h3>
+                <p>Writing production code across .NET, Node, and Python.</p>
             </div>
-            <div class="about-cta">
-                <a href="/about" class="btn btn-primary">Learn More About Me</a>
+            <div class="stat-card" data-tag="[edu]">
+                <i class="fas fa-graduation-cap ico"></i>
+                <h3>BS Information Tech</h3>
+                <p><%= data.college %> — <%= data.status %></p>
             </div>
+            <div class="stat-card" data-tag="[focus]">
+                <i class="fas fa-shield-halved ico"></i>
+                <h3>Backend &amp; Security</h3>
+                <p>Infrastructure, Linux administration, and AI tooling.</p>
+            </div>
+        </div>
+        <div class="about-cta">
+            <a href="/about" class="btn btn-ghost magnetic">cat ~/about.md <i class="fas fa-arrow-right"></i></a>
         </div>
     </div>
 </section>
 
-<!-- Skills Preview Section -->
+<!-- ============ STACK ============ -->
 <section class="skills-preview">
     <div class="container">
-        <h2 class="section-title">Technologies I Work With</h2>
+        <div class="section-head center">
+            <p class="eyebrow"><span class="text-accent">//</span> 02 — stack</p>
+            <h2 class="section-title">Tools I Run</h2>
+        </div>
+    </div>
+
+    <div class="marquee">
+        <div class="marquee-track">
+            <% const ticker = ['C# / .NET','Node.js','Express','Python','Django','React','MySQL','MongoDB','Linux','Cybersecurity','Azure','Claude Code','MCP','Arduino','REST APIs','C++']; %>
+            <% for (let pass = 0; pass < 2; pass++) { %>
+                <% ticker.forEach(t => { %><span class="marquee-item"><%= t %></span><% }); %>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="container">
         <div class="tech-grid">
-            <div class="tech-card">
-                <i class="fas fa-hashtag"></i>
-                <h3>C# / .NET</h3>
-            </div>
-            <div class="tech-card">
-                <i class="fab fa-python"></i>
-                <h3>Python / Django</h3>
-            </div>
-            <div class="tech-card">
-                <i class="fab fa-node-js"></i>
-                <h3>Node.js</h3>
-            </div>
-            <div class="tech-card">
-                <i class="fab fa-react"></i>
-                <h3>React</h3>
-            </div>
-            <div class="tech-card">
-                <i class="fas fa-code"></i>
-                <h3>C++</h3>
-            </div>
-            <div class="tech-card">
-                <i class="fas fa-database"></i>
-                <h3>MySQL</h3>
-            </div>
-            <div class="tech-card">
-                <i class="fab fa-linux"></i>
-                <h3>Linux</h3>
-            </div>
-            <div class="tech-card">
-                <i class="fas fa-robot"></i>
-                <h3>AI Tools</h3>
-            </div>
+            <div class="tech-card"><i class="fas fa-hashtag"></i><h3>C# / .NET</h3></div>
+            <div class="tech-card"><i class="fab fa-python"></i><h3>Python</h3></div>
+            <div class="tech-card"><i class="fab fa-node-js"></i><h3>Node.js</h3></div>
+            <div class="tech-card"><i class="fab fa-react"></i><h3>React</h3></div>
+            <div class="tech-card"><i class="fas fa-database"></i><h3>MySQL</h3></div>
+            <div class="tech-card"><i class="fab fa-linux"></i><h3>Linux</h3></div>
+            <div class="tech-card"><i class="fas fa-shield-halved"></i><h3>Security</h3></div>
+            <div class="tech-card"><i class="fas fa-robot"></i><h3>AI / MCP</h3></div>
         </div>
         <div class="skills-cta">
-            <a href="/skills" class="btn btn-secondary">View All Skills</a>
+            <a href="/skills" class="btn btn-ghost magnetic">ls ~/skills <i class="fas fa-arrow-right"></i></a>
         </div>
     </div>
 </section>
 
-<!-- CTA Section -->
+<!-- ============ CTA ============ -->
 <section class="cta-section">
     <div class="container">
-        <h2>Let's Work Together</h2>
-        <p>I'm currently available for freelance work and collaborations</p>
-        <a href="/contact" class="btn btn-primary">Contact Me</a>
+        <div class="cta-box">
+            <p class="eyebrow"><span class="text-accent">$</span> ./open_channel</p>
+            <h2>Let's build something solid.</h2>
+            <p>Currently available for freelance work, collaborations, and full-time roles.</p>
+            <a href="/contact" class="btn btn-primary magnetic"><i class="fas fa-paper-plane"></i> Start a conversation</a>
+        </div>
     </div>
 </section>
 

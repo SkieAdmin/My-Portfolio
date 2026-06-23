@@ -108,6 +108,42 @@ const portfolioData = {
   ],
   certificates: [
     {
+      title: 'Introduction to AI',
+      issuer: 'Google · Coursera',
+      date: 'June 23, 2026',
+      category: 'Certification',
+      details: 'Google AI Essentials · Verify ID: C0L0H42QQH3O',
+      icon: 'fab fa-google',
+      image: '/images/certificates/google-ai-intro.jpg'
+    },
+    {
+      title: 'Discover the Art of Prompting',
+      issuer: 'Google · Coursera',
+      date: 'June 23, 2026',
+      category: 'Certification',
+      details: 'Google AI Essentials · Verify ID: VZDRZT11KC71',
+      icon: 'fab fa-google',
+      image: '/images/certificates/google-ai-prompting.jpg'
+    },
+    {
+      title: 'Use AI Responsibly',
+      issuer: 'Google · Coursera',
+      date: 'June 23, 2026',
+      category: 'Certification',
+      details: 'Google AI Essentials · Verify ID: EAQI1AZ7UOH9',
+      icon: 'fab fa-google',
+      image: '/images/certificates/google-ai-responsible.jpg'
+    },
+    {
+      title: 'Maximize Productivity With AI Tools',
+      issuer: 'Google · Coursera',
+      date: 'June 23, 2026',
+      category: 'Certification',
+      details: 'Google AI Essentials · Verify ID: I7XT85EPCKDF',
+      icon: 'fab fa-google',
+      image: '/images/certificates/google-ai-productivity.jpg'
+    },
+    {
       title: 'TOPCIT Certificate',
       issuer: 'IITP (Institute for Information & Communications Technology Promotion)',
       date: 'December 10, 2025',

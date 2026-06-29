@@ -7,7 +7,7 @@ const root = document.documentElement;
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const accentRGB = () => (root.getAttribute('data-theme') === 'light' ? '15, 157, 98' : '78, 240, 163');
+const accentRGB = () => (root.getAttribute('data-theme') === 'light' ? '31, 111, 235' : '79, 157, 255');
 
 /* ---------- Theme ---------- */
 const themeToggle = document.getElementById('themeToggle');
@@ -349,5 +349,5 @@ document.addEventListener('DOMContentLoaded', () => {
     runBoot();
 });
 
-console.log('%c skie@dev:~$ ', 'background:#4ef0a3;color:#04130c;font-weight:700;padding:2px 6px;border-radius:3px;');
-console.log('%c systems operational — welcome to the console.', 'color:#4ef0a3;font-family:monospace;');
+console.log('%c skie@dev:~$ ', 'background:#4f9dff;color:#04122a;font-weight:700;padding:2px 6px;border-radius:3px;');
+console.log('%c systems operational — welcome to the console.', 'color:#4f9dff;font-family:monospace;');

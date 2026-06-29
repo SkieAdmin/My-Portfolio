@@ -36,7 +36,8 @@ const portfolioData = {
     infrastructure: [
       'Advanced Linux System Administration',
       'Cybersecurity Operations',
-      'Cloud Fundamentals (Azure)'
+      'VPS & Dedicated Server Management (Contabo)',
+      'SMTP Server Setup & Administration (AI-assisted)'
     ],
     aiTools: [
       'Claude Code',
@@ -46,7 +47,7 @@ const portfolioData = {
     ],
     hardware: [
       'Hardware Prototyping',
-      'Arduino-based Embedded Systems',
+      'Arduino-based Embedded Systems (schematics & code via Claude)',
       'IoT Integration'
     ]
   },

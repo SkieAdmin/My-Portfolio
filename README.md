@@ -1,141 +1,73 @@
 # Portfolio Website - Skie
 
-A modern, responsive portfolio website built with **ExpressJS** using **ES6+ module syntax**.
+The online CV of Kerneil "Skie" Gocotano, IT Instructor at Phoenix Publishing Library (Lapu-Lapu City, Cebu) and software developer. Built with **ExpressJS** and **EJS** using **ES6+ module syntax**.
 
 ## Features
 
-- ✨ Modern and clean design
-- 📱 Fully responsive (mobile, tablet, desktop)
-- ⚡ Fast and lightweight
-- 🎨 Smooth animations and transitions
-- 🚀 Built with ES6+ modules
+- 🪪 Interactive 3D ID badge on a satin lanyard (Three.js). Drag it, flick it to see the back
+- 📄 The whole CV on one page: now, experience, work, stack, certificates, contact
+- 🧱 Isometric 3D stack from embedded hardware up to AI tooling
+- 🖼️ Cover-flow certificate shelf with a full-size viewer
+- 🖨️ "Save CV as PDF" prints a clean one-column CV
+- 📱 Responsive, keyboard accessible, respects reduced motion
 - 📝 Contact form with API endpoint
-- 🎯 SEO friendly
 
 ## Tech Stack
 
 - **Backend**: ExpressJS (ES6+ modules)
 - **Template Engine**: EJS
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript, Three.js (loaded from jsDelivr)
 - **Icons**: Font Awesome
-- **Fonts**: Google Fonts (Poppins)
+- **Fonts**: Google Fonts (Archivo, variable width)
 
 ## Project Structure
 
 ```
 Portfolio/
 ├── public/
-│   ├── css/
-│   │   └── style.css
-│   └── js/
-│       └── main.js
-├── routes/
-│   └── index.js
+│   ├── css/style.css
+│   ├── js/
+│   │   ├── main.js        # nav, tilt, stack, certificate shelf, contact form
+│   │   └── badge.js       # the 3D badge (ES module)
+│   └── images/
+│       ├── profile-card.jpg            # badge photo
+│       └── certificates/
+│           ├── *.jpg                   # original scans
+│           ├── thumb/                  # shelf thumbnails
+│           └── full/                   # viewer images
+├── routes/index.js        # portfolio data + routes
 ├── views/
-│   ├── partials/
-│   │   ├── header.ejs
-│   │   └── footer.ejs
+│   ├── partials/{header,footer}.ejs
 │   ├── index.ejs
-│   ├── about.ejs
-│   ├── projects.ejs
-│   ├── skills.ejs
-│   ├── contact.ejs
 │   ├── 404.ejs
 │   └── error.ejs
 ├── server.js
-├── package.json
-└── README.md
-```
-
-## Installation
-
-1. Install dependencies:
-```bash
-npm install
-```
-
-2. Install Express:
-```bash
-npm install express
-```
-
-3. Install EJS (optional, if not auto-installed):
-```bash
-npm install ejs
+└── package.json
 ```
 
 ## Running the Application
 
-### Development mode (with auto-reload):
 ```bash
-npm run dev
+npm install
+npm run dev   # auto-reload
+npm start     # production
 ```
 
-### Production mode:
-```bash
-npm start
-```
+The server starts on `http://localhost:5100` (set `PORT` to change it).
 
-The server will start on `http://localhost:3000`
+## Routes
 
-## Available Routes
-
-- `/` - Home page
-- `/about` - About me
-- `/projects` - My projects
-- `/skills` - Skills and technologies
-- `/contact` - Contact form
-- `/api/contact` - POST endpoint for contact form
+- `/` - The CV
+- `/about`, `/projects`, `/skills`, `/contact` - Redirect to their section of the CV
+- `/api/contact` - POST endpoint for the contact form
 
 ## Customization
 
-### Update Personal Information
+Edit the `portfolioData` object in `routes/index.js` to update roles, experience, projects, the stack layers, and certificates. The badge's front and back are drawn from the same data.
 
-Edit the `portfolioData` object in `routes/index.js`:
+When adding a certificate, put the scan in `public/images/certificates/` and add resized copies to `thumb/` (560px) and `full/` (1800px).
 
-```javascript
-const portfolioData = {
-  name: 'Your Name',
-  title: 'Your Title',
-  // ... update other fields
-};
-```
-
-### Modify Styles
-
-Edit `public/css/style.css` to customize:
-- Colors (CSS variables in `:root`)
-- Layouts
-- Animations
-- Responsive breakpoints
-
-### Add New Routes
-
-Add routes in `routes/index.js`:
-
-```javascript
-router.get('/new-page', (req, res) => {
-  res.render('new-page', { title: 'New Page' });
-});
-```
-
-## Features to Add (Optional)
-
-- [ ] Blog section
-- [ ] Dark mode toggle
-- [ ] Email integration for contact form
-- [ ] Database integration
-- [ ] Admin panel
-- [ ] Analytics
-- [ ] Testimonials section
-- [ ] Resume download
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+Colors and type live as CSS variables in `:root` in `public/css/style.css`.
 
 ## License
 
@@ -143,10 +75,6 @@ MIT
 
 ## Author
 
-**Skie**
+**Kerneil "Skie" Gocotano**
 - GitHub: [@SkieAdmin](https://github.com/SkieAdmin)
 - Website: [pandadevelopment.net](https://pandadevelopment.net)
-
----
-
-Built with ❤️ using ExpressJS and ES6+ JavaScript

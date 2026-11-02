@@ -2,243 +2,213 @@ import express from 'express';
 
 const router = express.Router();
 
+const BIRTHDATE = new Date(2004, 3, 19); // April 19, 2004
+
+const ageOn = (date) => {
+  let age = date.getFullYear() - BIRTHDATE.getFullYear();
+  const hadBirthday = date.getMonth() > BIRTHDATE.getMonth()
+    || (date.getMonth() === BIRTHDATE.getMonth() && date.getDate() >= BIRTHDATE.getDate());
+  return hadBirthday ? age : age - 1;
+};
+
+// Certificates keep their original scans; thumb/ and full/ hold web-sized copies.
+const certificate = (file, cert) => ({
+  ...cert,
+  image: `/images/certificates/${file}`,
+  thumb: `/images/certificates/thumb/${file}`,
+  full: `/images/certificates/full/${file}`
+});
+
 // Portfolio data
 const portfolioData = {
   fullName: 'Kerneil Rommel S. Gocotano',
+  firstName: 'Kerneil',
+  lastName: 'Gocotano',
   nickname: 'Skie',
-  name: 'Kerneil.net',
   title: 'Software Developer & Systems Integrator',
-  company: 'Panda-Pelican Development',
-  companyHandle: '@Panda-Pelican Development',
-  age: 21,
-  birthdate: 'April 19, 2004',
-  location: 'Philippines',
-  description: "IT Graduate and Full-Stack Developer specializing in secure backend infrastructure, modern web applications, and AI-integrated systems. Highly proficient in C#, NodeJS, and React, with a strong foundation in Linux system administration.",
+  currentRole: {
+    title: 'IT Instructor',
+    org: 'Phoenix Publishing Library',
+    location: 'Lapu-Lapu City, Cebu'
+  },
+  location: 'Lapu-Lapu City, Cebu',
+  country: 'Philippines',
   phone: '+63-9525694638',
+  phoneDisplay: '+63 952 569 4638',
   website: 'https://pandadevelopment.net',
   github: 'https://github.com/SkieAdmin',
   githubUsername: 'SkieAdmin',
-  avatar: '/images/profile.png',
+  facebook: 'https://www.facebook.com/SkieAdmin',
+  youtube: 'https://www.youtube.com/@SkieHacker',
+  badgePhoto: '/images/profile-card.jpg',
   college: "St. Michael's College of Iligan Inc.",
-  status: 'Graduate (SY 2025-2026)',
   degree: 'Bachelor of Science in Information Technology',
-  schoolYear: 'S.Y. 2022-2026',
-  skills: {
-    languages: [
-      'C# (.NET, WinForms, WPF)',
-      'Python (Django)',
-      'JavaScript (Node.js, React)',
-      'PHP',
-      'C++',
-      'Lua'
-    ],
-    databases: ['MySQL', 'MongoDB'],
-    infrastructure: [
-      'Advanced Linux System Administration',
-      'Cybersecurity Operations',
-      'VPS & Dedicated Server Management (Contabo)',
-      'SMTP Server Setup & Administration (AI-assisted)'
-    ],
-    aiTools: [
-      'Claude Code',
-      'VS Code AI Integration (Claude Extension)',
-      'DeepSeek',
-      'Model Context Protocol (MCP) Orchestration'
-    ],
-    hardware: [
-      'Hardware Prototyping',
-      'Arduino-based Embedded Systems (schematics & code via Claude)',
-      'IoT Integration'
-    ]
-  },
-  projects: [
-    {
-      name: 'PandaAuth System',
-      description: 'Advanced key system authentication platform with secure integration, licensing, and automated entitlement checks',
-      url: 'https://pandadevelopment.net',
-      tech: ['NodeJS', 'ExpressJS', 'MongoDB']
-    },
-    {
-      name: 'Clinic Web Application',
-      description: 'Full-stack healthcare platform with LLM-assisted capabilities and Speech-To-Text APIs for patient record management',
-      url: 'https://github.com/SkieAdmin',
-      tech: ['Python', 'Django', 'REST APIs']
-    },
-    {
-      name: 'VeggieScan',
-      description: 'Visual diagnosis application to detect vegetable freshness and contamination using YOLOv8 and LLM models',
-      url: 'https://github.com/SkieAdmin',
-      tech: ['Python', 'YOLOv8', 'AI/ML']
-    },
-    {
-      name: 'GitHub Projects',
-      description: 'Various open-source projects and contributions',
-      url: 'https://github.com/SkieAdmin',
-      tech: ['JavaScript', 'C#', 'React']
-    }
+  schoolYear: '2022 – 2026',
+  about: [
+    "I teach IT at Phoenix Publishing Library in Lapu-Lapu City, Cebu, where I've moved after graduating from St. Michael's College of Iligan with a BS in Information Technology.",
+    "Before the classroom there were seven years of shipping code. I build secure backend infrastructure, web applications, and AI-integrated systems, mostly in C#, Node.js, Python, and React, on Linux servers I run myself.",
+    'I use AI tooling like Claude Code and MCP to move faster without cutting corners, and I take projects all the way from the web down to embedded hardware.'
   ],
-  about: `I'm a 21-year-old Software Developer and Systems Integrator, a proud graduate of St. Michael's College of Iligan Inc. (SY 2025-2026) with a BS in Information Technology.
-          With over 7 years of programming experience, I specialize in secure backend infrastructure, modern web applications, and AI-integrated systems.
-          I'm highly proficient in C#, NodeJS, React, and Python, with a strong foundation in Linux system administration and cybersecurity.
-          I leverage advanced AI development tooling like Claude Code to accelerate development cycles, write robust logic, and deploy scalable solutions.`,
   experience: [
     {
-      title: 'Backend Infrastructure Engineer',
-      company: 'PandaAuth System - Panda Development',
-      period: '2020 - Present',
-      description: 'Developed and maintained server-side infrastructure for an advanced key system authentication platform with secure integration, licensing, and automated entitlement checks'
+      title: 'IT Instructor',
+      org: 'Phoenix Publishing Library',
+      location: 'Lapu-Lapu City, Cebu',
+      period: '2026 – Present',
+      current: true,
+      description: 'Teaching information technology and programming, guiding learners from computer fundamentals through hands-on software projects.'
+    },
+    {
+      title: 'Software Engineer, AI/ML',
+      org: 'VeggieScan',
+      period: '2025',
+      description: 'Built a visual diagnosis app that detects vegetable freshness and contamination with YOLOv8, with a large language model explaining each verdict.'
     },
     {
       title: 'Full-Stack Developer',
-      company: 'Clinic Web Application',
-      period: '2024 - 2025',
-      description: 'Engineered complete backend infrastructure for a healthcare platform using Python/Django, integrating LLM-assisted capabilities and Speech-To-Text APIs'
+      org: 'Clinic Web Application',
+      period: '2024 – 2025',
+      description: 'Engineered the backend of a healthcare platform in Python and Django, adding LLM-assisted features and speech-to-text for patient records.'
     },
     {
-      title: 'Software Engineer (AI/ML)',
-      company: 'VeggieScan',
-      period: '2025',
-      description: 'Developed a visual diagnosis application using YOLOv8 for vegetable freshness detection, powered by Large Language Models'
+      title: 'Backend Infrastructure Engineer',
+      org: 'PandaAuth System, Panda Development',
+      period: '2020 – Present',
+      description: 'Develop and maintain the server-side infrastructure of a key-system authentication platform: client integration, licensing, and automated entitlement checks.'
     },
     {
       title: '.NET / C# Developer',
-      company: 'Independent',
-      period: '2018 - Present',
-      description: 'Developing enterprise applications and backend services using .NET framework, WinForms, and WPF'
+      org: 'Independent',
+      period: '2018 – Present',
+      description: 'Building desktop applications and backend services with .NET, WinForms, and WPF.'
     }
   ],
+  projects: [
+    {
+      name: 'PandaAuth System',
+      role: 'Backend infrastructure engineer',
+      description: 'A key-system authentication platform: secure client integration, licensing, and automated entitlement checks.',
+      url: 'https://pandadevelopment.net',
+      linkLabel: 'Visit pandadevelopment.net',
+      tech: ['Node.js', 'Express', 'MongoDB']
+    },
+    {
+      name: 'Clinic Web Application',
+      role: 'Full-stack developer',
+      description: 'A healthcare platform for patient records, with LLM-assisted features and speech-to-text to cut manual data entry.',
+      url: 'https://github.com/SkieAdmin',
+      linkLabel: 'View on GitHub',
+      tech: ['Python', 'Django', 'REST APIs', 'LLM']
+    },
+    {
+      name: 'VeggieScan',
+      role: 'Software engineer, AI/ML',
+      description: 'Visual diagnosis of vegetable freshness and contamination. YOLOv8 finds the problem; a language model explains the verdict.',
+      url: 'https://github.com/SkieAdmin',
+      linkLabel: 'View on GitHub',
+      tech: ['Python', 'YOLOv8', 'LLM']
+    }
+  ],
+  // Listed top to bottom; the 3D tower draws the last layer at the base.
+  stack: [
+    { name: 'AI tooling', label: 'AI tooling', items: ['Claude Code', 'VS Code AI integration', 'DeepSeek', 'MCP orchestration'] },
+    { name: 'Web & desktop UI', label: 'UI', items: ['React', 'JavaScript', 'WinForms', 'WPF'] },
+    { name: 'Languages & backend', label: 'Backend', items: ['C# / .NET', 'Node.js & Express', 'Python & Django', 'PHP', 'C++', 'Lua', 'REST APIs'] },
+    { name: 'Data', label: 'Data', items: ['MySQL', 'MongoDB'] },
+    { name: 'Infrastructure & security', label: 'Infrastructure', items: ['Linux system administration', 'Cybersecurity operations', 'VPS & dedicated servers (Contabo)', 'SMTP server setup'] },
+    { name: 'Hardware & embedded', label: 'Hardware', items: ['Arduino embedded systems', 'Hardware prototyping', 'IoT integration'] }
+  ],
   certificates: [
-    {
+    certificate('best-oral-presentation.jpg', {
+      title: 'Best Oral Presentation',
+      issuer: "St. Michael's College of Iligan Inc.",
+      date: 'March 5, 2026',
+      category: 'Award',
+      details: 'Track 4: Environmental Sustainability and Stewardship of Creation, Undergraduate Category, 6th International Research Congress'
+    }),
+    certificate('best-paper-presentation.jpg', {
+      title: 'Best Paper Presentation',
+      issuer: "St. Michael's College of Iligan Inc.",
+      date: 'March 5, 2026',
+      category: 'Award',
+      details: 'Track 4: Environmental Sustainability and Stewardship of Creation, Undergraduate Category, 6th International Research Congress'
+    }),
+    certificate('google-ai-intro.jpg', {
       title: 'Introduction to AI',
-      issuer: 'Google · Coursera',
+      issuer: 'Google, Coursera',
       date: 'June 23, 2026',
       category: 'Certification',
-      details: 'Google AI Essentials · Verify ID: C0L0H42QQH3O',
-      icon: 'fab fa-google',
-      image: '/images/certificates/google-ai-intro.jpg'
-    },
-    {
+      details: 'Google AI Essentials. Verify ID: C0L0H42QQH3O'
+    }),
+    certificate('google-ai-prompting.jpg', {
       title: 'Discover the Art of Prompting',
-      issuer: 'Google · Coursera',
+      issuer: 'Google, Coursera',
       date: 'June 23, 2026',
       category: 'Certification',
-      details: 'Google AI Essentials · Verify ID: VZDRZT11KC71',
-      icon: 'fab fa-google',
-      image: '/images/certificates/google-ai-prompting.jpg'
-    },
-    {
+      details: 'Google AI Essentials. Verify ID: VZDRZT11KC71'
+    }),
+    certificate('google-ai-responsible.jpg', {
       title: 'Use AI Responsibly',
-      issuer: 'Google · Coursera',
+      issuer: 'Google, Coursera',
       date: 'June 23, 2026',
       category: 'Certification',
-      details: 'Google AI Essentials · Verify ID: EAQI1AZ7UOH9',
-      icon: 'fab fa-google',
-      image: '/images/certificates/google-ai-responsible.jpg'
-    },
-    {
+      details: 'Google AI Essentials. Verify ID: EAQI1AZ7UOH9'
+    }),
+    certificate('google-ai-productivity.jpg', {
       title: 'Maximize Productivity With AI Tools',
-      issuer: 'Google · Coursera',
+      issuer: 'Google, Coursera',
       date: 'June 23, 2026',
       category: 'Certification',
-      details: 'Google AI Essentials · Verify ID: I7XT85EPCKDF',
-      icon: 'fab fa-google',
-      image: '/images/certificates/google-ai-productivity.jpg'
-    },
-    {
+      details: 'Google AI Essentials. Verify ID: I7XT85EPCKDF'
+    }),
+    certificate('topcit-certification.jpg', {
       title: 'TOPCIT Certificate',
       issuer: 'IITP (Institute for Information & Communications Technology Promotion)',
       date: 'December 10, 2025',
       category: 'Certification',
-      details: 'Level 3 | Score: 404/1000 | Certificate No. TL2506002251',
-      icon: 'fas fa-certificate',
-      image: '/images/certificates/topcit-certification.jpg'
-    },
-    {
-      title: 'Best Oral Presentation',
-      issuer: 'St. Michael\'s College of Iligan Inc.',
-      date: 'March 5, 2026',
-      category: 'Award',
-      details: 'Track 4: Environmental Sustainability and Stewardship of Creation - Undergraduate Category, 6th International Research Congress',
-      icon: 'fas fa-trophy',
-      image: '/images/certificates/best-oral-presentation.jpg'
-    },
-    {
-      title: 'Best Paper Presentation',
-      issuer: 'St. Michael\'s College of Iligan Inc.',
-      date: 'March 5, 2026',
-      category: 'Award',
-      details: 'Track 4: Environmental Sustainability and Stewardship of Creation - Undergraduate Category, 6th International Research Congress',
-      icon: 'fas fa-trophy',
-      image: '/images/certificates/best-paper-presentation.jpg'
-    },
-    {
+      details: 'Level 3, score 404/1000. Certificate No. TL2506002251'
+    }),
+    certificate('research-congress-cert.jpg', {
       title: 'Research Paper Presenter',
-      issuer: 'St. Michael\'s College of Iligan Inc.',
-      date: 'March 4-5, 2026',
+      issuer: "St. Michael's College of Iligan Inc.",
+      date: 'March 4–5, 2026',
       category: 'Recognition',
-      details: '6th International Research Congress: Marian-Inspired Research for Social Transformation',
-      icon: 'fas fa-award',
-      image: '/images/certificates/research-congress-cert.jpg'
-    },
-    {
-      title: '4th Year Representative Recognition',
-      issuer: 'College of Computer Studies, St. Michael\'s College of Iligan Inc.',
+      details: '6th International Research Congress: Marian-Inspired Research for Social Transformation'
+    }),
+    certificate('4th-year-rep-cert.jpg', {
+      title: '4th Year Representative',
+      issuer: "College of Computer Studies, St. Michael's College of Iligan Inc.",
       date: 'March 18, 2026',
       category: 'Recognition',
-      details: 'In recognition of invaluable service and commitment as 4th Year Representative, AY 2025-2026',
-      icon: 'fas fa-award',
-      image: '/images/certificates/4th-year-rep-cert.jpg'
-    },
-    {
-      title: 'CISCO Routing & Switching - IP Telephony Seminar',
+      details: 'For service and commitment as 4th Year Representative, AY 2025–2026'
+    }),
+    certificate('cisco-seminar.jpg', {
+      title: 'CISCO Routing & Switching: IP Telephony',
       issuer: 'Rivan IT Training Systems',
       date: 'March 10, 2026',
       category: 'Seminar',
-      details: 'Educational Tour for CISCO Routing & Switching - IP Telephony',
-      icon: 'fas fa-network-wired',
-      image: '/images/certificates/cisco-seminar.jpg'
-    }
+      details: 'Educational tour for CISCO Routing & Switching, IP Telephony'
+    })
   ]
 };
 
-// Home Route
+// Home: the whole CV lives on one page
 router.get('/', (req, res) => {
   res.render('index', {
-    title: 'Home',
-    data: portfolioData
+    title: `${portfolioData.firstName} ${portfolioData.lastName}`,
+    data: { ...portfolioData, age: ageOn(new Date()) }
   });
 });
 
-// About Route
-router.get('/about', (req, res) => {
-  res.render('about', {
-    title: 'About Me',
-    data: portfolioData
-  });
-});
-
-// Projects Route
-router.get('/projects', (req, res) => {
-  res.render('projects', {
-    title: 'My Projects',
-    data: portfolioData
-  });
-});
-
-// Skills Route
-router.get('/skills', (req, res) => {
-  res.render('skills', {
-    title: 'Skills & Technologies',
-    data: portfolioData
-  });
-});
-
-// Contact Route
-router.get('/contact', (req, res) => {
-  res.render('contact', {
-    title: 'Contact Me',
-    data: portfolioData
-  });
+// The old multi-page routes now point at their section of the CV
+const legacySections = {
+  '/about': 'now',
+  '/projects': 'work',
+  '/skills': 'stack',
+  '/contact': 'contact'
+};
+Object.entries(legacySections).forEach(([path, section]) => {
+  router.get(path, (req, res) => res.redirect(301, `/#${section}`));
 });
 
 // API endpoint for contact form (if needed later)
@@ -250,7 +220,7 @@ router.post('/api/contact', (req, res) => {
 
   res.json({
     success: true,
-    message: 'Thank you for your message! I will get back to you soon.'
+    message: 'Message sent. I will get back to you soon.'
   });
 });
 

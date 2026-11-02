@@ -1,132 +1,286 @@
 <%- include('partials/header') %>
 
-<!-- ============ HERO : boot sequence ============ -->
-<section class="hero">
-    <div class="container hero-grid">
-        <div class="terminal booting" id="bootTerminal">
-            <div class="terminal-bar">
-                <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
-                <span class="terminal-title">skie@portfolio: ~</span>
-                <span class="terminal-tag">bash</span>
+<%
+    const json = (value) => JSON.stringify(value).replace(/</g, '\\u003c');
+    const role = data.currentRole;
+%>
+
+<!-- Print-only CV header (the 3D hero is screen-only) -->
+<header class="print-head">
+    <h1><%= data.fullName %></h1>
+    <p><%= role.title %>, <%= role.org %>. <%= data.title %>.</p>
+    <p><%= data.location %>, <%= data.country %> | <%= data.phoneDisplay %> | github.com/<%= data.githubUsername %> | pandadevelopment.net</p>
+</header>
+
+<!-- ============ HERO: the badge ============ -->
+<section class="hero" id="top" aria-labelledby="heroName">
+    <canvas class="hero-canvas" id="badgeCanvas" aria-hidden="true"></canvas>
+
+    <div class="hero-inner">
+        <h1 class="hero-name" id="heroName">
+            <span><%= data.firstName %></span>
+            <span><%= data.lastName %></span>
+        </h1>
+
+        <div class="badge-slot" id="badgeSlot">
+            <!-- Shown until (or unless) the 3D badge is ready -->
+            <div class="badge-fallback" aria-hidden="true">
+                <div class="badge-fallback-band"><span>Skie</span></div>
+                <img src="<%= data.badgePhoto %>" alt="" width="880" height="700">
+                <p class="badge-fallback-name"><%= data.lastName %></p>
+                <p class="badge-fallback-role"><%= role.title %></p>
+                <p class="badge-fallback-org"><%= role.org %></p>
             </div>
-            <div class="terminal-body">
-                <p class="line"><span class="prompt">skie@portfolio<span class="p-path">:~$</span></span> <span class="cmd">whoami</span></p>
-                <p class="out name"><%= data.fullName %></p>
-
-                <p class="line"><span class="prompt">$</span> <span class="cmd">cat role.txt</span></p>
-                <p class="out role"><%= data.title %></p>
-                <p class="out muted">@ <a href="<%= data.website %>" target="_blank" rel="noopener" class="text-accent"><%= data.company %></a></p>
-
-                <p class="line"><span class="prompt">$</span> <span class="cmd">./list_stack --top</span></p>
-                <p class="out stack"><b>.NET</b> · <b>Node.js</b> · <b>Python</b> · <b>React</b> · <b>Linux</b> · <b>MCP</b></p>
-
-                <p class="line"><span class="prompt">$</span> <span class="cmd">cat status.txt</span></p>
-                <p class="out">7+ years building secure backends &amp; AI-integrated systems.</p>
-                <p class="out muted">// available for work · remote-friendly · Philippines</p>
-
-                <p class="line"><span class="prompt">$</span> <span class="caret"></span></p>
-            </div>
+            <p class="hero-hint">Drag the badge. Flick it to see the back.</p>
         </div>
 
-        <aside class="hero-side">
-            <div class="avatar-frame">
-                <img src="<%= data.avatar %>" alt="<%= data.fullName %>" class="avatar-img">
-                <span class="avatar-scan"></span>
-                <span class="avatar-tag">● live</span>
+        <div class="hero-meta">
+            <p class="hero-role"><strong><%= role.title %></strong> at <%= role.org %>. Software developer and systems integrator.</p>
+            <p class="hero-place"><i class="fas fa-location-dot" aria-hidden="true"></i> <%= data.location %></p>
+            <div class="hero-actions">
+                <a class="btn btn-ink" href="#experience">Read the CV</a>
+                <a class="btn btn-line" href="#contact">Get in touch</a>
             </div>
-            <div class="hero-cta">
-                <a href="/projects" class="btn btn-primary magnetic">./view_work</a>
-                <a href="/about" class="btn btn-ghost magnetic">./about.md</a>
-            </div>
-            <div class="hero-social">
-                <a href="<%= data.github %>" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://www.facebook.com/SkieAdmin" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                <a href="https://www.youtube.com/@SkieHacker" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                <a href="<%= data.website %>" target="_blank" rel="noopener" aria-label="Website"><i class="fas fa-globe"></i></a>
-            </div>
-        </aside>
-    </div>
-    <a href="#profile" class="scroll-cue">scroll <i class="fas fa-chevron-down"></i></a>
-</section>
-
-<noscript><style>.terminal.booting .line,.terminal.booting .out{opacity:1!important}.terminal,.hero-side{opacity:1!important;transform:none!important}</style></noscript>
-
-<!-- ============ SYSTEM PROFILE ============ -->
-<section class="about-preview" id="profile">
-    <div class="container">
-        <div class="section-head">
-            <p class="eyebrow"><span class="text-accent">//</span> 01 — profile</p>
-            <h2 class="section-title">System Profile</h2>
-            <p class="section-sub">A backend-focused engineer who ships secure infrastructure, modern web apps, and AI-integrated systems.</p>
-        </div>
-        <div class="about-stats">
-            <div class="stat-card" data-tag="[exp]">
-                <i class="fas fa-terminal ico"></i>
-                <h3><span data-count="7">0</span>+ Years</h3>
-                <p>Writing production code across .NET, Node, and Python.</p>
-            </div>
-            <div class="stat-card" data-tag="[edu]">
-                <i class="fas fa-graduation-cap ico"></i>
-                <h3>BS Information Tech</h3>
-                <p><%= data.college %> — <%= data.status %></p>
-            </div>
-            <div class="stat-card" data-tag="[focus]">
-                <i class="fas fa-shield-halved ico"></i>
-                <h3>Backend &amp; Security</h3>
-                <p>Infrastructure, Linux administration, and AI tooling.</p>
-            </div>
-        </div>
-        <div class="about-cta">
-            <a href="/about" class="btn btn-ghost magnetic">cat ~/about.md <i class="fas fa-arrow-right"></i></a>
         </div>
     </div>
 </section>
 
-<!-- ============ STACK ============ -->
-<section class="skills-preview">
-    <div class="container">
-        <div class="section-head center">
-            <p class="eyebrow"><span class="text-accent">//</span> 02 — stack</p>
-            <h2 class="section-title">Tools I Run</h2>
+<!-- ============ NOW ============ -->
+<section class="section now" id="now" aria-labelledby="nowTitle">
+    <div class="container now-grid">
+        <div class="now-text">
+            <h2 class="section-title" id="nowTitle">Now teaching IT in Lapu-Lapu City.</h2>
+            <% data.about.forEach(paragraph => { %>
+                <p><%= paragraph %></p>
+            <% }); %>
         </div>
-    </div>
 
-    <div class="marquee">
-        <div class="marquee-track">
-            <% const ticker = ['C# / .NET','Node.js','Express','Python','Django','React','MySQL','MongoDB','Linux','Cybersecurity','Azure','Claude Code','MCP','Arduino','REST APIs','C++']; %>
-            <% for (let pass = 0; pass < 2; pass++) { %>
-                <% ticker.forEach(t => { %><span class="marquee-item"><%= t %></span><% }); %>
-            <% } %>
-        </div>
+        <dl class="facts">
+            <div><dt>Role</dt><dd><%= role.title %>, <%= role.org %></dd></div>
+            <div><dt>Based in</dt><dd><%= data.location %>, <%= data.country %></dd></div>
+            <div><dt>Education</dt><dd>BS Information Technology, <%= data.college %>, class of 2026</dd></div>
+            <div><dt>Experience</dt><dd>7+ years writing production code</dd></div>
+            <div><dt>Age</dt><dd><%= data.age %></dd></div>
+            <div><dt>Known as</dt><dd><%= data.nickname %></dd></div>
+        </dl>
     </div>
+</section>
 
+<!-- ============ EXPERIENCE: the CV sheet ============ -->
+<section class="section experience" id="experience" aria-labelledby="experienceTitle">
     <div class="container">
-        <div class="tech-grid">
-            <div class="tech-card"><i class="fas fa-hashtag"></i><h3>C# / .NET</h3></div>
-            <div class="tech-card"><i class="fab fa-python"></i><h3>Python</h3></div>
-            <div class="tech-card"><i class="fab fa-node-js"></i><h3>Node.js</h3></div>
-            <div class="tech-card"><i class="fab fa-react"></i><h3>React</h3></div>
-            <div class="tech-card"><i class="fas fa-database"></i><h3>MySQL</h3></div>
-            <div class="tech-card"><i class="fab fa-linux"></i><h3>Linux</h3></div>
-            <div class="tech-card"><i class="fas fa-shield-halved"></i><h3>Security</h3></div>
-            <div class="tech-card"><i class="fas fa-robot"></i><h3>AI / MCP</h3></div>
-        </div>
-        <div class="skills-cta">
-            <a href="/skills" class="btn btn-ghost magnetic">ls ~/skills <i class="fas fa-arrow-right"></i></a>
+        <h2 class="section-title" id="experienceTitle">Experience</h2>
+
+        <div class="sheet-stage">
+            <article class="sheet">
+                <header class="sheet-head">
+                    <div>
+                        <p class="sheet-name"><%= data.fullName %></p>
+                        <p class="sheet-title"><%= role.title %>, <%= data.title %></p>
+                    </div>
+                    <ul class="sheet-contact">
+                        <li><%= data.location %></li>
+                        <li>github.com/<%= data.githubUsername %></li>
+                        <li><%= data.phoneDisplay %></li>
+                    </ul>
+                </header>
+
+                <ol class="timeline">
+                    <% data.experience.forEach(job => { %>
+                        <li class="job<%= job.current ? ' is-current' : '' %>">
+                            <p class="job-period"><%= job.period %></p>
+                            <div class="job-body">
+                                <h3><%= job.title %><% if (job.current) { %> <span class="job-now">Current role</span><% } %></h3>
+                                <p class="job-org"><%= job.org %><% if (job.location) { %>, <%= job.location %><% } %></p>
+                                <p class="job-desc"><%= job.description %></p>
+                            </div>
+                        </li>
+                    <% }); %>
+                </ol>
+
+                <div class="sheet-edu">
+                    <h3 class="sheet-label">Education</h3>
+                    <div class="job">
+                        <p class="job-period"><%= data.schoolYear %></p>
+                        <div class="job-body">
+                            <h3><%= data.degree %></h3>
+                            <p class="job-org"><%= data.college %></p>
+                        </div>
+                    </div>
+                </div>
+            </article>
         </div>
     </div>
 </section>
 
-<!-- ============ CTA ============ -->
-<section class="cta-section">
+<!-- ============ WORK ============ -->
+<section class="section work" id="work" aria-labelledby="workTitle">
     <div class="container">
-        <div class="cta-box">
-            <p class="eyebrow"><span class="text-accent">$</span> ./open_channel</p>
-            <h2>Let's build something solid.</h2>
-            <p>Currently available for freelance work, collaborations, and full-time roles.</p>
-            <a href="/contact" class="btn btn-primary magnetic"><i class="fas fa-paper-plane"></i> Start a conversation</a>
+        <div class="section-head-row">
+            <h2 class="section-title" id="workTitle">Selected work</h2>
+            <a class="text-link" href="<%= data.github %>" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> More on GitHub</a>
+        </div>
+
+        <div class="work-grid">
+            <% data.projects.forEach(project => { %>
+                <article class="project" data-tilt="7">
+                    <div class="project-inner">
+                        <p class="project-role"><%= project.role %></p>
+                        <h3 class="project-name"><%= project.name %></h3>
+                        <p class="project-desc"><%= project.description %></p>
+                        <ul class="project-tech">
+                            <% project.tech.forEach(tech => { %><li><%= tech %></li><% }); %>
+                        </ul>
+                        <a class="project-link" href="<%= project.url %>" target="_blank" rel="noopener"><%= project.linkLabel %> <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    </div>
+                </article>
+            <% }); %>
         </div>
     </div>
 </section>
+
+<!-- ============ STACK: isometric layers ============ -->
+<section class="section stack" id="stack" aria-labelledby="stackTitle">
+    <div class="container">
+        <div class="stack-head">
+            <h2 class="section-title" id="stackTitle">From embedded hardware to AI tooling</h2>
+            <p class="stack-lede">My work runs from the web down to embedded hardware. These are the layers I build in, and the tools I use at each one.</p>
+        </div>
+
+        <div class="stack-grid">
+            <div class="tower" aria-hidden="true">
+                <div class="tower-iso">
+                    <% data.stack.slice().reverse().forEach((layer, i) => { %>
+                        <div class="slab" style="--i: <%= i %>" data-layer="<%= data.stack.length - 1 - i %>">
+                            <span class="slab-side slab-side-l"></span>
+                            <span class="slab-side slab-side-r"></span>
+                            <span class="slab-label"><%= layer.label %></span>
+                        </div>
+                    <% }); %>
+                </div>
+            </div>
+
+            <ul class="layers">
+                <% data.stack.forEach((layer, i) => { %>
+                    <li class="layer" data-layer="<%= i %>">
+                        <h3><%= layer.name %></h3>
+                        <p><%= layer.items.join(', ') %></p>
+                    </li>
+                <% }); %>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ============ CREDENTIALS: cover-flow shelf ============ -->
+<section class="section credentials" id="credentials" aria-labelledby="credentialsTitle">
+    <div class="container">
+        <div class="section-head-row">
+            <h2 class="section-title" id="credentialsTitle">Certificates and awards</h2>
+            <div class="shelf-controls">
+                <button type="button" class="round-btn" data-shelf="-1" aria-label="Previous certificate"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+                <button type="button" class="round-btn" data-shelf="1" aria-label="Next certificate"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="shelf" id="shelf">
+        <ul class="shelf-track">
+            <% data.certificates.forEach((cert, i) => { %>
+                <li class="shelf-item<%= cert.category === 'Award' ? ' is-award' : '' %>">
+                    <button type="button" class="cert" data-cert="<%= i %>" aria-label="View <%= cert.title %> certificate">
+                        <span class="cert-frame"><img src="<%= cert.thumb %>" alt="" loading="lazy" decoding="async"></span>
+                    </button>
+                    <div class="cert-caption">
+                        <p class="cert-kind"><%= cert.category %></p>
+                        <h3><%= cert.title %></h3>
+                        <p><%= cert.issuer %></p>
+                        <p class="cert-date"><%= cert.date %></p>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+</section>
+
+<dialog class="lightbox" id="lightbox" aria-labelledby="lbTitle">
+    <figure class="lb-figure">
+        <img id="lbImg" src="" alt="">
+        <figcaption>
+            <h3 id="lbTitle"></h3>
+            <p id="lbMeta"></p>
+            <p id="lbDetails" class="lb-details"></p>
+            <a id="lbOriginal" href="#" target="_blank" rel="noopener">Open the original scan</a>
+        </figcaption>
+    </figure>
+    <button type="button" class="lb-btn lb-prev" data-lb="-1" aria-label="Previous certificate"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+    <button type="button" class="lb-btn lb-next" data-lb="1" aria-label="Next certificate"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+    <button type="button" class="lb-close" data-lb-close aria-label="Close"><i class="fas fa-xmark" aria-hidden="true"></i></button>
+</dialog>
+
+<!-- ============ CONTACT ============ -->
+<section class="section contact" id="contact" aria-labelledby="contactTitle">
+    <div class="container contact-grid">
+        <div class="contact-copy">
+            <h2 class="section-title" id="contactTitle">Let's talk</h2>
+            <p>For freelance projects, collaborations, or teaching, send a message here or reach me directly.</p>
+            <ul class="contact-list">
+                <li><i class="fas fa-phone" aria-hidden="true"></i><a href="tel:<%= data.phone.replace(/-/g, '') %>"><%= data.phoneDisplay %></a></li>
+                <li><i class="fab fa-github" aria-hidden="true"></i><a href="<%= data.github %>" target="_blank" rel="noopener">github.com/<%= data.githubUsername %></a></li>
+                <li><i class="fas fa-globe" aria-hidden="true"></i><a href="<%= data.website %>" target="_blank" rel="noopener">pandadevelopment.net</a></li>
+                <li><i class="fas fa-location-dot" aria-hidden="true"></i><span><%= data.location %>, <%= data.country %></span></li>
+            </ul>
+            <div class="socials">
+                <a href="<%= data.facebook %>" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                <a href="<%= data.youtube %>" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+                <a href="<%= data.github %>" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <form class="contact-form" id="contactForm" novalidate>
+            <div class="field">
+                <label for="name">Your name</label>
+                <input type="text" id="name" name="name" autocomplete="name" required>
+            </div>
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" autocomplete="email" required>
+            </div>
+            <div class="field">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+            <div class="field">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-ink">Send message</button>
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+    </div>
+</section>
+
+<script type="application/json" id="certData"><%- json(data.certificates.map(c => ({ title: c.title, issuer: c.issuer, date: c.date, details: c.details, category: c.category, full: c.full, image: c.image }))) %></script>
+<script type="application/json" id="badgeData"><%- json({
+    photo: data.badgePhoto,
+    firstNames: 'Kerneil Rommel S.',
+    lastName: data.lastName,
+    role: role.title,
+    org: role.org,
+    location: data.location,
+    githubUrl: 'github.com/' + data.githubUsername,
+    website: 'pandadevelopment.net',
+    phone: data.phoneDisplay,
+    stack: ['C# / .NET', 'Node.js & Express', 'Python & Django', 'React', 'Linux administration', 'Claude Code & MCP']
+}) %></script>
+<script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+    }
+</script>
+<script type="module" src="/js/badge.js"></script>
 
 <%- include('partials/footer') %>
